@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- <service android:name="com.example.musicplayer.MusicService" /> -->
+         <service android:name="com.example.tanzeelakhan.music_player.MusicService" />
         <activity
             android:name=".menu"
             android:label="@string/title_activity_menu"
