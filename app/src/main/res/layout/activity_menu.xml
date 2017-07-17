@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tanzeelakhan.music_player.menu">
+
+
+    <ImageButton
+        android:id="@+id/action_shuffle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="Shuffle"
+        android:icon="@android:drawable/presence_audio_away" />
+
+    <ImageButton
+        android:id="@+id/action_end"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:icon="@android:drawable/ic_delete"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="End" />
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <!--&lt;!&ndash;<include layout="@layout/content_menu" />&ndash;&gt;-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
+
+</LinearLayout>
