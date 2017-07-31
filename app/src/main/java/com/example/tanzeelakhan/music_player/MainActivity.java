@@ -461,7 +461,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         //create and set adapter
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
-
         //setup controller
         setController();
     }
@@ -476,6 +475,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             musicSrv = binder.getService();
             //pass list
             musicSrv.setList(songList);
+            musicSrv.controller = controller;
             musicBound = true;
         }
 
@@ -488,23 +488,23 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     //start and bind the service when the activity starts
     @Override
     protected void onStart() {
-        super.onStart();
         if(playIntent==null){
             playIntent = new Intent(this, MusicService.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
         }
+        super.onStart();
     }
 
     //user song select
     public void songPicked(View view){
-        musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
-        musicSrv.playSong();
         if(playbackPaused){
             setController();
             playbackPaused=false;
         }
-        controller.show(0);
+        musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
+        musicSrv.playSong();
+        controller.show();
     }
 
     @Override
@@ -615,12 +615,19 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
     @Override
     public void start() {
+        playbackPaused = false;
         musicSrv.go();
+        controller.show(0);
     }
 
     //set the controller up
     private void setController(){
-        controller = new MusicController(this);
+        if(controller == null)
+            controller = new MusicController(this);
+        else
+            controller.invalidate();
+
+//        controller = new MusicController(this);
         //set previous and next button listeners
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
@@ -667,7 +674,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     protected void onResume(){
         super.onResume();
         if(paused){
-            setController();
+//            setController();
             paused=false;
         }
     }

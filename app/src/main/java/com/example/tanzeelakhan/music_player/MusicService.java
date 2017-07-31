@@ -218,6 +218,8 @@ public class MusicService extends Service implements
     //shuffle flag and random
     private boolean shuffle=false;
     private Random rand;
+    public MusicController controller;
+    private boolean paused=false, playbackPaused=false;
 
     public void onCreate(){
         //create the service
@@ -318,6 +320,7 @@ public class MusicService extends Service implements
     public void onPrepared(MediaPlayer mp) {
         //start playback
         mp.start();
+        controller.show(0);
         //notification
         Intent notIntent = new Intent(this, MainActivity.class);
         notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
