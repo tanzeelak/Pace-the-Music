@@ -183,7 +183,10 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                 Log.d("TITLE", thisTitle);
                 Log.d("ARTIST", thisArtist);
                 Log.d("BPM", thisBpm);
-                songList.add(new Song(thisId, thisTitle, thisArtist, thisBpm));
+                if (!thisArtist.equals("<unknown>")) {
+                    Log.d("found","keep");
+                    songList.add(new Song(thisId, thisTitle, thisArtist, thisBpm));
+                }
             }
             while (musicCursor.moveToNext());
         }
@@ -210,13 +213,11 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
-                //Log.d("plsY","hello");
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line).append("\n");
                 }
                 bufferedReader.close();
                 Log.d("json object", stringBuilder.toString());
-//                    Log.d("bpm", stringBuilder.toString().tempo);
 
                 JSONObject jObject = new JSONObject(stringBuilder.toString());
                 try {
@@ -227,8 +228,11 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                             JSONObject oneObject = jArray.getJSONObject(i);
                             // Pulling items from the array
                             bpm = oneObject.getString("tempo");
-                            // String oneObjectsItem2 = oneObject.getString("anotherSTRINGNAMEINtheARRAY");
+                            if (bpm.equals("null")) {
+                                bpm = "100";
+                            }
                             Log.d("BPM", bpm);
+
                         } catch (JSONException e) {
                             // Oops
                         }
@@ -239,14 +243,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                     bpm = "100";
                     return bpm;
                 }
-
-//                    Log.d("BPM PLEASE", oneOb);
-
-//                    return stringBuilder.toString();
-
-                    return bpm;
-                //return ("BPM: " + bpm).toString();
-//                    return bpm;
+                return bpm;
             }
             finally{
                 urlConnection.disconnect();
