@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -63,7 +64,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     static final String API_KEY = "e325699e517ecfe9167e0b3397e0a646";
     static final String API_URL = "https://api.getsongbpm.com/search/?";
     String bpm;
+    int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 18;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,24 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
+        }
+
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Explain to the user why we need to read the contacts
+            }
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+            // app-defined int constant that should be quite unique
+
+            return;
         }
 
         //retrieve list view
