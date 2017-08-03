@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+
 import android.net.Uri;
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -47,6 +49,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
     //song list variables
     private ArrayList<Song> songList;
+    private List g0 = new ArrayList();
+    private List g1 = new ArrayList();
+    private List g2 = new ArrayList();
+    private List g3 = new ArrayList();
+    private List g4 = new ArrayList();
+    private List g5 = new ArrayList();
+    private List g6 = new ArrayList();
+    private List g7 = new ArrayList();
     private ListView songView;
 
     //service
@@ -102,6 +112,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         songList = new ArrayList<Song>();
         //get songs from device
         getSongList();
+//        listAllTags(g0, 0);
+//        listAllTags(g1, 1);
+//        listAllTags(g2, 2);
+//        listAllTags(g3, 3);
+//        listAllTags(g4, 4);
+//        listAllTags(g5, 5);
+//        listAllTags(g6, 6);
+//        listAllTags(g7, 7);
         //sort alphabetically by title
         Collections.sort(songList, new Comparator<Song>(){
             public int compare(Song a, Song b){
@@ -207,6 +225,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
                 String thisBpm = doInBackground(thisTitle, thisArtist);
+                int numBpm = Integer.parseInt(thisBpm);
                 Log.d("TITLE", thisTitle);
                 Log.d("ARTIST", thisArtist);
                 Log.d("BPM", thisBpm);
@@ -214,10 +233,50 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                     Log.d("found","keep");
                     songList.add(new Song(thisId, thisTitle, thisArtist, thisBpm, thisTag));
                     Log.d("tagNum", Integer.toString(thisTag));
+                    if (numBpm <= 80){
+                        g0.add(thisTag);
+                        Log.d("group", "0");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 80 && numBpm <= 88) {
+                        g1.add(thisTag);
+                        Log.d("group", "1");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 88 && numBpm <= 96) {
+                        g2.add(thisTag);
+                        Log.d("group", "2");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 96 && numBpm <= 104) {
+                        g3.add(thisTag);
+                        Log.d("group", "3");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 104 && numBpm <= 112) {
+                        g4.add(thisTag);
+                        Log.d("group", "4");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 112 && numBpm <= 120) {
+                        g5.add(thisTag);
+                        Log.d("group", "5");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 120 && numBpm <= 128) {
+                        g6.add(thisTag);
+                        Log.d("group", "6");
+                        Log.d("name", thisTitle);
+                    }
+                    else if (numBpm > 128) {
+                        g7.add(thisTag);
+                        Log.d("group", "7");
+                        Log.d("name", thisTitle);
+                    }
+
                     thisTag++;
                 }
-            }
-            while (musicCursor.moveToNext());
+            } while (musicCursor.moveToNext());
         }
     }
 
@@ -421,5 +480,41 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         musicSrv=null;
         super.onDestroy();
     }
+
+    private void listAllTags(List group, int groupNum) {
+        Log.d("group num", Integer.toString(groupNum));
+        for (int i = 0; i < group.size(); i++){
+            Log.d("song element", group.get(i).toString());
+        }
+    }
+
+    private List mapStepstoBPM(int steps){
+        if (steps <= 20){
+            return g0;
+        }
+        else if (steps > 20 && steps <= 22) {
+            return g1;
+        }
+        else if (steps > 22 && steps <= 24) {
+            return g2;
+        }
+        else if (steps > 24 && steps <= 26) {
+            return g3;
+        }
+        else if (steps > 26 && steps <= 28) {
+            return g4;
+        }
+        else if (steps > 28 && steps <= 30) {
+            return g5;
+        }
+        else if (steps > 30 && steps <= 32) {
+            return g6;
+        }
+        else if (steps > 32) {
+            return g7;
+        }
+        return g7;
+    }
+
 
 }
