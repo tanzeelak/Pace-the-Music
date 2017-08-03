@@ -127,6 +127,10 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             musicSrv.setList(songList);
             musicSrv.controller = controller;
             musicBound = true;
+//            automatic playing
+            musicSrv.setSong(2);
+            musicSrv.playSong();
+            controller.show();
         }
 
         @Override
@@ -153,6 +157,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             playbackPaused=false;
         }
         musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
+        Log.d("tag", view.getTag().toString());
         musicSrv.playSong();
         controller.show();
     }

@@ -10,17 +10,20 @@ public class Song {
     private String title;
     private String artist;
     private String bpm;
+//    private int tagNum;
 
     public Song(long songID, String songTitle, String songArtist, String songBpm){
         id=songID;
         title=songTitle;
         artist=songArtist;
         bpm=songBpm;
+//        tagNum=songTag;
     }
 
     public long getID(){return id;}
     public String getTitle(){return title;}
     public String getArtist(){return artist;}
     public String getBpm(){return bpm;}
+//    public int getTagNum(){return tagNum;}
 
 }
