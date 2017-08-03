@@ -201,6 +201,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             int artistColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media.ARTIST);
             //add songs to list
+            int thisTag = 0;
             do {
                 long thisId = musicCursor.getLong(idColumn);
                 String thisTitle = musicCursor.getString(titleColumn);
@@ -211,7 +212,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                 Log.d("BPM", thisBpm);
                 if (!thisArtist.equals("<unknown>")) {
                     Log.d("found","keep");
-                    songList.add(new Song(thisId, thisTitle, thisArtist, thisBpm));
+                    songList.add(new Song(thisId, thisTitle, thisArtist, thisBpm, thisTag));
+                    Log.d("tagNum", Integer.toString(thisTag));
+                    thisTag++;
                 }
             }
             while (musicCursor.moveToNext());
