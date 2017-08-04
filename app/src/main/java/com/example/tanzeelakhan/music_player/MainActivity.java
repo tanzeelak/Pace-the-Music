@@ -157,7 +157,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             musicSrv.controller = controller;
             musicBound = true;
 //            automatic playing
-            gChosen = mapStepstoBPM(40);
+            gChosen = mapStepstoBPM(21);
             int tag = chooseSongbySteps(gChosen);
             Log.d("tag please", Integer.toString(tag));
             musicSrv.setSong(tag);
@@ -500,9 +500,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     }
 
     private int chooseSongbySteps(List group) {
-        int size = group.size();
-//        int groupIndex = random.nextInt(size - 1) + 1;
-        int index = (int) group.get(0);
+        int size = group.size() - 1;
+        int groupIndex = random.nextInt(size + 1);
+        int index = (int) group.get(groupIndex);
         Log.d("hah", Integer.toString(index));
         return index;
     }
