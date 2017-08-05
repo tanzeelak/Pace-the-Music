@@ -3,8 +3,12 @@ package com.example.tanzeelakhan.music_player;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -42,12 +46,13 @@ import com.example.tanzeelakhan.music_player.MusicService.MusicBinder;
 import android.widget.MediaController.MediaPlayerControl;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends Activity implements MediaPlayerControl {
+public class MainActivity extends Activity implements MediaPlayerControl,SensorEventListener {
 
     //song list variables
     private ArrayList<Song> songList;
@@ -79,7 +84,17 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     String bpm;
     int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 18;
     Random random = new Random();
-    StepTimer stepTimer = new StepTimer();
+//    StepTimer stepTimer = new StepTimer();
+
+    private CountDownTimer countDownTimer;
+    boolean running = false;
+    SensorManager sensorManager;
+    float initialStep1 = 0;
+    float initialStep = 0;
+    float finalStep = 0;
+    float finalStep1 = 0;
+    boolean timerRunning = false;
+    int onFinishStep = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -145,7 +160,8 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         //setup controller
         setController();
 //        SensorEvent event = new SensorEvent();
-        stepTimer.start();
+//        stepTimer.onResume();
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     }
 
     //connect to the service
@@ -436,6 +452,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     protected void onPause(){
         super.onPause();
         paused=true;
+        running = false;
     }
 
     @Override
@@ -444,6 +461,15 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         if(paused){
 //            setController();
             paused=false;
+        }
+
+        running = true;
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        if (countSensor != null) {
+            sensorManager.registerListener(this, countSensor, sensorManager.SENSOR_DELAY_UI);
+
+        } else {
+            Toast.makeText(this, "Sensor not found!!1", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -556,4 +582,71 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
 
 
+    public void startTimer() {
+        if (timerRunning == false) {
+            timerRunning = true;
+            initialStep = initialStep1;
+//            time.setText("15");
+            Log.d("time", "15");
+
+
+            countDownTimer = new CountDownTimer(15 * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+//                    time.setText("" + millisUntilFinished / 1000);
+                    Log.d("time", Integer.toString((int) (millisUntilFinished / 1000)));
+
+                }
+
+                @Override
+                public void onFinish() {
+//                    time.setText("Done !");
+                    timerRunning = false;
+                    finalStep = finalStep1;
+                    onFinishStep = (int) (finalStep - initialStep);
+//                    tv_steps.setText(String.valueOf(finalStep - initialStep));
+                    Log.d("tv_steps", String.valueOf(finalStep - initialStep));
+                }
+            };
+
+            countDownTimer.start();
+        }
+    }
+
+    private void cancel() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+            timerRunning = false;
+        }
+    }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (running) {
+            initialStep1 = event.values[0];
+            finalStep1 = event.values[0];
+            startTimer();
+            Log.d("hllur", "hi");
+
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    public int getOnFinishStep() {
+        return onFinishStep;
+    }
+
+    public boolean hasFinished() {
+        if (timerRunning) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
