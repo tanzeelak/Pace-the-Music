@@ -78,6 +78,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     String bpm;
     int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 18;
     Random random = new Random();
+    StepTimer stepTimer = new StepTimer();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
