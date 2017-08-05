@@ -3,6 +3,7 @@ package com.example.tanzeelakhan.music_player;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.hardware.SensorEvent;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
@@ -143,6 +144,8 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         songView.setAdapter(songAdt);
         //setup controller
         setController();
+//        SensorEvent event = new SensorEvent();
+        stepTimer.start();
     }
 
     //connect to the service

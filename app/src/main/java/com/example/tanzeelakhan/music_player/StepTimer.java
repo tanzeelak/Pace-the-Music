@@ -1,5 +1,6 @@
 package com.example.tanzeelakhan.music_player;
 
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ import android.widget.Toast;
  * Created by tanzeelakhan on 8/4/17.
  */
 
-public class StepTimer extends AppCompatActivity implements SensorEventListener{
+public class StepTimer extends Activity implements SensorEventListener{
 //    private TextView time;
     private Button start;
     private Button cancel;
@@ -64,17 +66,19 @@ public class StepTimer extends AppCompatActivity implements SensorEventListener{
     }
 
 
-    private void start() {
+    public void start() {
         if(timerRunning == false) {
             timerRunning = true;
             initialStep = initialStep1;
 //            time.setText("15");
+            Log.d("time", "15");
 
 
             countDownTimer = new CountDownTimer(15 * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 //                    time.setText("" + millisUntilFinished / 1000);
+                    Log.d("time", Integer.toString((int)(millisUntilFinished / 1000)));
 
                 }
 
@@ -85,6 +89,7 @@ public class StepTimer extends AppCompatActivity implements SensorEventListener{
                     finalStep = finalStep1;
                     onFinishStep = (int)(finalStep - initialStep);
 //                    tv_steps.setText(String.valueOf(finalStep - initialStep));
+                    Log.d("tv_steps", String.valueOf(finalStep - initialStep));
                 }
             };
 
