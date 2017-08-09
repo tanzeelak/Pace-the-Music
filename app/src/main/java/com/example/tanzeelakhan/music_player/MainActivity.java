@@ -177,12 +177,12 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             musicSrv.controller = controller;
             musicBound = true;
 //            automatic playing
-            gChosen = mapStepstoBPM(21);
-            int tag = chooseSongbySteps(gChosen);
-            Log.d("tag please", Integer.toString(tag));
-            musicSrv.setSong(tag);
-            musicSrv.playSong();
-            controller.show();
+//            gChosen = mapStepstoBPM(21);
+//            int tag = chooseSongbySteps(gChosen);
+//            Log.d("tag please", Integer.toString(tag));
+//            musicSrv.setSong(tag);
+//            musicSrv.playSong();
+//            controller.show();
         }
 
         @Override
@@ -587,10 +587,10 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             timerRunning = true;
             initialStep = initialStep1;
 //            time.setText("15");
-            Log.d("time", "15");
+            Log.d("time", "30");
 
 
-            countDownTimer = new CountDownTimer(15 * 1000, 1000) {
+            countDownTimer = new CountDownTimer(30 * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 //                    time.setText("" + millisUntilFinished / 1000);
@@ -606,6 +606,14 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                     onFinishStep = (int) (finalStep - initialStep);
 //                    tv_steps.setText(String.valueOf(finalStep - initialStep));
                     Log.d("tv_steps", String.valueOf(finalStep - initialStep));
+                    gChosen = mapStepstoBPM((int)(finalStep-initialStep));
+                    int tag = chooseSongbySteps(gChosen);
+                    Log.d("tag please", Integer.toString(tag));
+                    musicSrv.setSong(tag);
+                    musicSrv.playSong();
+                    controller.show();
+
+
                 }
             };
 
@@ -627,7 +635,9 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         if (running) {
             initialStep1 = event.values[0];
             finalStep1 = event.values[0];
+            Log.d("initialStep1 b4", Integer.toString((int)initialStep1));
             startTimer();
+            Log.d("initialStep1 af", Integer.toString((int)initialStep1));
             Log.d("hllur", "hi");
 
         }
