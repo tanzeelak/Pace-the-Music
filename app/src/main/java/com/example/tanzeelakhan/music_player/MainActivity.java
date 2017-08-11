@@ -634,6 +634,8 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             initialStep1 = event.values[0];
             finalStep1 = event.values[0];
             Log.d("initialStep1 b4", Integer.toString((int)initialStep1));
+            MyThread p = new MyThread();
+            p.start();
             startTimer();
             Log.d("initialStep1 af", Integer.toString((int)initialStep1));
             Log.d("hllur", "hi");
@@ -646,15 +648,10 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
 
     }
 
-    public int getOnFinishStep() {
-        return onFinishStep;
-    }
-
-    public boolean hasFinished() {
-        if (timerRunning) {
-            return false;
-        } else {
-            return true;
+    private class MyThread extends Thread{
+        @Override
+        public void run() {
+            startTimer();
         }
     }
 }
