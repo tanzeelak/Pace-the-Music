@@ -274,7 +274,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         }
     }
 
-        protected String doInBackground(String songText, String artistText) {
+    protected String doInBackground(String songText, String artistText) {
 
         //works with test case
         //songText = "All of me";
@@ -580,17 +580,15 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         }
     }
 
-
-
     public void startTimer() {
         if (timerRunning == false) {
             timerRunning = true;
             initialStep = initialStep1;
 //            time.setText("15");
-            Log.d("time", "30");
+            Log.d("time", "15");
 
 
-            countDownTimer = new CountDownTimer(30 * 1000, 1000) {
+            countDownTimer = new CountDownTimer(15 * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 //                    time.setText("" + millisUntilFinished / 1000);
