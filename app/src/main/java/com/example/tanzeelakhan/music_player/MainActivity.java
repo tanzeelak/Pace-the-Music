@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -65,6 +66,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     private List g6 = new ArrayList();
     private List g7 = new ArrayList();
     private List gChosen;
+    private List groupLists = new ArrayList();
     private ListView songView;
 
     //service
@@ -95,6 +97,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     float finalStep1 = 0;
     boolean timerRunning = false;
     int onFinishStep = 0;
+    int iterateList;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -139,6 +142,14 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             addSongsToGroups(numBpm, i ,title);
         }
 
+        groupLists.add(g0);
+        groupLists.add(g1);
+        groupLists.add(g2);
+        groupLists.add(g3);
+        groupLists.add(g4);
+        groupLists.add(g5);
+        groupLists.add(g6);
+        groupLists.add(g7);
 
         listAllTags(g0, 0);
         listAllTags(g1, 1);
@@ -176,13 +187,6 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             musicSrv.setList(songList);
             musicSrv.controller = controller;
             musicBound = true;
-//            automatic playing
-//            gChosen = mapStepstoBPM(21);
-//            int tag = chooseSongbySteps(gChosen);
-//            Log.d("tag please", Integer.toString(tag));
-//            musicSrv.setSong(tag);
-//            musicSrv.playSong();
-//            controller.show();
         }
 
         @Override
@@ -410,8 +414,6 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             controller = new MusicController(this);
         else
             controller.invalidate();
-
-//        controller = new MusicController(this);
         //set previous and next button listeners
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
@@ -459,7 +461,6 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     protected void onResume(){
         super.onResume();
         if(paused){
-//            setController();
             paused=false;
         }
 
@@ -496,37 +497,44 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     public List mapStepstoBPM(int steps){
         if (steps <= 20){
             Log.d("groupNumAgain", "0");
-            return g0;
+            iterateList = 0;
+            return (List)groupLists.get(0);
         }
         else if (steps > 20 && steps <= 22) {
             Log.d("groupNumAgain", "1");
-            return g1;
+            iterateList = 1;
+            return (List)groupLists.get(1);
         }
         else if (steps > 22 && steps <= 24) {
             Log.d("groupNumAgain", "2");
-            return g2;
+            iterateList = 2;
+            return (List)groupLists.get(2);
         }
         else if (steps > 24 && steps <= 26) {
             Log.d("groupNumAgain", "3");
-            return g3;
+            iterateList = 3;
+            return (List)groupLists.get(3);
         }
         else if (steps > 26 && steps <= 28) {
             Log.d("groupNumAgain", "4");
-            return g4;
+            iterateList = 4;
+            return (List)groupLists.get(4);
         }
         else if (steps > 28 && steps <= 30) {
             Log.d("groupNumAgain", "5");
-            return g5;
+            iterateList = 5;
+            return (List)groupLists.get(5);
         }
         else if (steps > 30 && steps <= 32) {
             Log.d("groupNumAgain", "6");
-            return g6;
+            iterateList = 6;
+            return (List)groupLists.get(6);
         }
         else{// if (steps > 32) {
             Log.d("groupNumAgain", "7");
-            return g7;
+            iterateList = 7;
+            return (List)groupLists.get(7);
         }
-//        return g7;
     }
 
     private int chooseSongbySteps(List group) {
@@ -598,13 +606,21 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
 
                 @Override
                 public void onFinish() {
-//                    time.setText("Done !");
                     timerRunning = false;
                     finalStep = finalStep1;
                     onFinishStep = (int) (finalStep - initialStep);
-//                    tv_steps.setText(String.valueOf(finalStep - initialStep));
                     Log.d("tv_steps", String.valueOf(finalStep - initialStep));
                     gChosen = mapStepstoBPM((int)(finalStep-initialStep));
+
+                    while (gChosen.isEmpty())
+                    {
+                        if (iterateList == 7)
+                            iterateList = 0;
+                        else
+                            iterateList++;
+                        gChosen = (List)groupLists.get(iterateList);
+                    }
+
                     int tag = chooseSongbySteps(gChosen);
                     Log.d("tag please", Integer.toString(tag));
                     musicSrv.setSong(tag);
@@ -637,7 +653,6 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             MyThread p = new MyThread();
             p.start();
             startTimer();
-            Log.d("initialStep1 af", Integer.toString((int)initialStep1));
             Log.d("hllur", "hi");
 
         }
