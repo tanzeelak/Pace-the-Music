@@ -97,7 +97,7 @@ public class MusicService extends Service implements
     }
 
     //play a song
-    public void playSong(){
+    public String playSong(){
         //play
         player.reset();
         //get song
@@ -118,6 +118,7 @@ public class MusicService extends Service implements
             Log.e("MUSIC SERVICE", "Error setting data source", e);
         }
         player.prepareAsync();
+        return songTitle;
     }
 
     //set the song
@@ -190,14 +191,15 @@ public class MusicService extends Service implements
     }
 
     //skip to previous track
-    public void playPrev(){
+    public String playPrev(){
         songPosn--;
         if(songPosn<0) songPosn=songs.size()-1;
-        playSong();
+        String title = playSong();
+        return title;
     }
 
     //skip to next
-    public void playNext(){
+    public String playNext(){
         if(shuffle){
             int newSong = songPosn;
             while(newSong==songPosn){
@@ -209,7 +211,8 @@ public class MusicService extends Service implements
             songPosn++;
             if(songPosn>=songs.size()) songPosn=0;
         }
-        playSong();
+        String title = playSong();
+        return title;
     }
 
     @Override

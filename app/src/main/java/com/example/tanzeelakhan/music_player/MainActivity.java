@@ -103,6 +103,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     boolean timerRunning = false;
     int onFinishStep = 0;
     int iterateList;
+    int currentTag;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -222,9 +223,11 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         }
         musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
         Log.d("tag", view.getTag().toString());
-        musicSrv.playSong();
+        currentTag = (int)view.getTag();
+        String title = musicSrv.playSong();
+        //Log.d("song title", songList.get((int)view.getTag()).getTitle());
+        currentSongTitle.setText(title);
         controller.show();
-       // currentSongTitle.setText(songList.get((int)view.getTag()).getTitle());
     }
 
     @Override
@@ -427,11 +430,13 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //currentSongTitle.setText(songList.get(currentTag + 1).getTitle());
                 playNext();
             }
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //currentSongTitle.setText(songList.get(currentTag - 1).getTitle());
                 playPrev();
             }
         });
@@ -442,7 +447,8 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     }
 
     private void playNext(){
-        musicSrv.playNext();
+        String title = musicSrv.playNext();
+        currentSongTitle.setText(title);
         if(playbackPaused){
             setController();
             playbackPaused=false;
@@ -451,7 +457,8 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     }
 
     private void playPrev(){
-        musicSrv.playPrev();
+        String title = musicSrv.playPrev();
+        currentSongTitle.setText(title);
         if(playbackPaused){
             setController();
             playbackPaused=false;
@@ -638,9 +645,10 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                     int tag = chooseSongbySteps(gChosen);
                     Log.d("tag please", Integer.toString(tag));
                     musicSrv.setSong(tag);
-                    musicSrv.playSong();
+                    String title = musicSrv.playSong();
+                    currentTag = tag;
+                    currentSongTitle.setText(title);
                     controller.show();
-                    currentSongTitle.setText(songList.get(tag).getTitle());
 
                 }
             };
