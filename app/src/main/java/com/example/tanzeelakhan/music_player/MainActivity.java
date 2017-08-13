@@ -224,6 +224,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         Log.d("tag", view.getTag().toString());
         musicSrv.playSong();
         controller.show();
+       // currentSongTitle.setText(songList.get((int)view.getTag()).getTitle());
     }
 
     @Override
@@ -639,7 +640,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                     musicSrv.setSong(tag);
                     musicSrv.playSong();
                     controller.show();
-
+                    currentSongTitle.setText(songList.get(tag).getTitle());
 
                 }
             };
