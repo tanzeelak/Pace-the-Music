@@ -616,8 +616,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             countDownTimer = new CountDownTimer(15 * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-//                    time.setText("" + millisUntilFinished / 1000);
-                    String timeText = Integer.toString((int) (millisUntilFinished / 1000));
+                    String timeText = Integer.toString((int) (millisUntilFinished / 1000 - 1));
                     currentTime.setText(timeText);
                     Log.d("time", timeText);
 
@@ -675,8 +674,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             MyThread p = new MyThread();
             p.start();
             startTimer();
-            Log.d("hllur", "hi");
-
+//            currentTime.setText("0");
         }
     }
 

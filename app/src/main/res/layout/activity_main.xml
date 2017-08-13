@@ -14,14 +14,18 @@
     android:layout_height="wrap_content"
     android:layout_gravity="top"
     android:orientation="vertical"
-    android:background="#99000000">
+    android:background="#99000000"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/currentSongTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Coming up."
-        android:textColor="#FFFFFFFF"/>
+        android:text="Sampling Your Rate!"
+        android:textColor="@color/colorAccent"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,8 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Timer"
-            android:textColor="#FFFFFFFF"/>
+            android:text="Timer:"
+            android:textColor="#FFFFFFFF"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/currentTime"
@@ -43,15 +48,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="15"
-            android:textColor="#FFFFFFFF"/>
+            android:textColor="#FFFFFFFF"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Steps"
-            android:textColor="#FFFFFFFF"/>
+            android:text="Steps:"
+            android:textColor="#FFFFFFFF"
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/currentSteps"
@@ -59,7 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="0"
-            android:textColor="#FFFFFFFF"/>
+            android:textColor="#FFFFFFFF"
+            android:textSize="20dp"/>
     </LinearLayout>
 
 </LinearLayout>
