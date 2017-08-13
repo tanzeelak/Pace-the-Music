@@ -279,7 +279,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                 Log.d("TITLE", thisTitle);
                 Log.d("ARTIST", thisArtist);
                 Log.d("BPM", thisBpm);
-                if (!thisArtist.equals("<unknown>")) {
+                if (!thisArtist.equals("<unknown>") && numBpm != 0) {
                     Log.d("found","keep");
                     songList.add(new Song(thisId, thisTitle, thisArtist, thisBpm));
                     Log.d("tagNum", Integer.toString(thisTag));
@@ -328,7 +328,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                             // Pulling items from the array
                             bpm = oneObject.getString("tempo");
                             if (bpm.equals("null")) {
-                                bpm = "100";
+                                bpm = "0";
                             }
                             Log.d("BPM", bpm);
 
@@ -339,7 +339,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                 }
                 catch (Exception e){
                     Log.d("hello","lol");
-                    bpm = "100";
+                    bpm = "0";
                     return bpm;
                 }
                 return bpm;
@@ -351,7 +351,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         catch(Exception e) {
             Log.d("plso","helloo");
             Log.e("ERROR", e.getMessage(), e);
-            bpm = "100";
+            bpm = "0";
             return bpm;
         }
     }
