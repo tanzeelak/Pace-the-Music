@@ -11,7 +11,7 @@ android:padding="5dp" >
         android:id="@+id/song_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF99"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -19,14 +19,14 @@ android:padding="5dp" >
         android:id="@+id/song_artist"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF99"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/song_bpm"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF99"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
 </LinearLayout>

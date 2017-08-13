@@ -10,14 +10,12 @@ public class Song implements Comparable<Song>{
     private String title;
     private String artist;
     private String bpm;
-    private int tagNum;
 
     public Song(long songID, String songTitle, String songArtist, String songBpm){
         id=songID;
         title=songTitle;
         artist=songArtist;
         bpm=songBpm;
-//        tagNum=songTag;
     }
 
     public int compareTo(Song other) {
@@ -29,6 +27,4 @@ public class Song implements Comparable<Song>{
     public String getTitle(){return title;}
     public String getArtist(){return artist;}
     public String getBpm(){return bpm;}
-    public int getTagNum(){return tagNum;}
-
 }

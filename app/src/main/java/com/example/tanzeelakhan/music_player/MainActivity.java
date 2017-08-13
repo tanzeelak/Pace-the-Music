@@ -225,7 +225,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         Log.d("tag", view.getTag().toString());
         currentTag = (int)view.getTag();
         String title = musicSrv.playSong();
-        //Log.d("song title", songList.get((int)view.getTag()).getTitle());
+//        Log.d("song title", songList.get((int)view.getTag()).getTitle());
         currentSongTitle.setText(title);
         controller.show();
     }
