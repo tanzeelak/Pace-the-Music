@@ -52,6 +52,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class MainActivity extends Activity implements MediaPlayerControl,SensorEventListener {
 
@@ -91,6 +92,10 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     private CountDownTimer countDownTimer;
     boolean running = false;
     SensorManager sensorManager;
+    TextView currentSongTitle;
+    TextView currentTime;
+    TextView currentSteps;
+
     float initialStep1 = 0;
     float initialStep = 0;
     float finalStep = 0;
@@ -172,6 +177,9 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         setController();
 //        SensorEvent event = new SensorEvent();
 //        stepTimer.onResume();
+        currentSongTitle = (TextView)findViewById(R.id.currentSongTitle);
+        currentTime = (TextView)findViewById(R.id.currentTime);
+        currentSteps = (TextView)findViewById(R.id.currentSteps);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     }
 
@@ -593,6 +601,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             timerRunning = true;
             initialStep = initialStep1;
 //            time.setText("15");
+            currentTime.setText("15");
             Log.d("time", "15");
 
 
@@ -600,7 +609,9 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                 @Override
                 public void onTick(long millisUntilFinished) {
 //                    time.setText("" + millisUntilFinished / 1000);
-                    Log.d("time", Integer.toString((int) (millisUntilFinished / 1000)));
+                    String timeText = Integer.toString((int) (millisUntilFinished / 1000));
+                    currentTime.setText(timeText);
+                    Log.d("time", timeText);
 
                 }
 
@@ -609,7 +620,9 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
                     timerRunning = false;
                     finalStep = finalStep1;
                     onFinishStep = (int) (finalStep - initialStep);
-                    Log.d("tv_steps", String.valueOf(finalStep - initialStep));
+                    String stepsText =  String.valueOf(finalStep - initialStep);
+                    currentSteps.setText(stepsText);
+                    Log.d("tv_steps", stepsText);
                     gChosen = mapStepstoBPM((int)(finalStep-initialStep));
 
                     while (gChosen.isEmpty())
