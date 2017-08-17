@@ -28,6 +28,8 @@ import java.util.Random;
 import android.net.Uri;
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -87,7 +89,6 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     String bpm;
     int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 18;
     Random random = new Random();
-//    StepTimer stepTimer = new StepTimer();
 
     private CountDownTimer countDownTimer;
     boolean running = false;
@@ -95,6 +96,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     TextView currentSongTitle;
     TextView currentTime;
     TextView currentSteps;
+    //EditText chosenInterval;
 
     float initialStep1 = 0;
     float initialStep = 0;
@@ -104,6 +106,7 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     int onFinishStep = 0;
     int iterateList;
     int currentTag;
+    float timeInterval = 15;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -181,6 +184,8 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         currentSongTitle = (TextView)findViewById(R.id.currentSongTitle);
         currentTime = (TextView)findViewById(R.id.currentTime);
         currentSteps = (TextView)findViewById(R.id.currentSteps);
+       // chosenInterval = (EditText)findViewById(R.id.chosenInterval);
+       // chosenInterval.addTextChangedListener(timeWatcher);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     }
 
@@ -511,42 +516,43 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
     }
 
     public List mapStepstoBPM(int steps){
-        if (steps <= 20){
+        float speed = steps/timeInterval;
+        if (speed <= 15/15){
             Log.d("groupNumAgain", "0");
             iterateList = 0;
             return (List)groupLists.get(0);
         }
-        else if (steps > 20 && steps <= 22) {
+        else if (speed > 15/15 && speed <= 22/15) {
             Log.d("groupNumAgain", "1");
             iterateList = 1;
             return (List)groupLists.get(1);
         }
-        else if (steps > 22 && steps <= 24) {
+        else if (speed > 22/15 && speed <= 24/15) {
             Log.d("groupNumAgain", "2");
             iterateList = 2;
             return (List)groupLists.get(2);
         }
-        else if (steps > 24 && steps <= 26) {
+        else if (speed > 24/15 && speed <= 26/15) {
             Log.d("groupNumAgain", "3");
             iterateList = 3;
             return (List)groupLists.get(3);
         }
-        else if (steps > 26 && steps <= 28) {
+        else if (speed > 26/15 && speed <= 28/15) {
             Log.d("groupNumAgain", "4");
             iterateList = 4;
             return (List)groupLists.get(4);
         }
-        else if (steps > 28 && steps <= 30) {
+        else if (speed > 28/15 && speed <= 30/15) {
             Log.d("groupNumAgain", "5");
             iterateList = 5;
             return (List)groupLists.get(5);
         }
-        else if (steps > 30 && steps <= 32) {
+        else if (speed > 30/15 && speed <= 32/15) {
             Log.d("groupNumAgain", "6");
             iterateList = 6;
             return (List)groupLists.get(6);
         }
-        else{// if (steps > 32) {
+        else{// if (steps > 32/15) {
             Log.d("groupNumAgain", "7");
             iterateList = 7;
             return (List)groupLists.get(7);
@@ -608,12 +614,11 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
         if (timerRunning == false) {
             timerRunning = true;
             initialStep = initialStep1;
-//            time.setText("15");
             currentTime.setText("15");
             Log.d("time", "15");
 
 
-            countDownTimer = new CountDownTimer(15 * 1000, 1000) {
+            countDownTimer = new CountDownTimer((int)timeInterval * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     String timeText = Integer.toString((int) (millisUntilFinished / 1000 - 1));
@@ -674,7 +679,6 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             MyThread p = new MyThread();
             p.start();
             startTimer();
-//            currentTime.setText("0");
         }
     }
 
@@ -689,4 +693,16 @@ public class MainActivity extends Activity implements MediaPlayerControl,SensorE
             startTimer();
         }
     }
+
+//    private TextWatcher timeWatcher = new TextWatcher() {
+//        public void afterTextChanged(Editable s) {
+//            //timeInterval = Integer.parseInt(chosenInterval.toString());
+//            Log.d("interval chosen", chosenInterval.toString());
+//        }
+//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        }
+//        public void onTextChanged(CharSequence s, int start, int before,
+//                                  int count) {
+//        }
+//    };
 }
